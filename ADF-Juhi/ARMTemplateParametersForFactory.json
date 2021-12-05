@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADF-Juhi"
+		},
+		"ls_AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"ls_ablob_covidreportingsa_connectionString": {
+			"value": ""
+		},
+		"ls_AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://juhiadlsstorage.dfs.core.windows.net/"
+		},
+		"ls_source_deathcases_http_properties_typeProperties_url": {
+			"value": "@{linkedService().SourceBaseURL}"
+		},
+		"mykv_properties_typeProperties_baseUrl": {
+			"value": "https://juhi-kv.vault.azure.net/"
+		},
+		"test_blob_ls_properties_typeProperties_connectionString_secretName": {
+			"value": "blobstoragesecretidentifier"
+		},
+		"tr_ingestion_data_properties_typeProperties_scope": {
+			"value": "/subscriptions/60575ea3-7374-4d41-9f31-4dfb7a59dae1/resourceGroups/Juhi/providers/Microsoft.Storage/storageAccounts/juhiblobstorage"
+		}
+	}
+}

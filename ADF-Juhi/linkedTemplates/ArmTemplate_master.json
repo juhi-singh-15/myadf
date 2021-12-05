@@ -1,0 +1,91 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ADF-Juhi"
+		},
+		"ls_AzureDataLakeStorage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_AzureDataLakeStorage'"
+		},
+		"ls_ablob_covidreportingsa_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_ablob_covidreportingsa'"
+		},
+		"ls_AzureDataLakeStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://juhiadlsstorage.dfs.core.windows.net/"
+		},
+		"ls_source_deathcases_http_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{linkedService().SourceBaseURL}"
+		},
+		"mykv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://juhi-kv.vault.azure.net/"
+		},
+		"test_blob_ls_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "blobstoragesecretidentifier"
+		},
+		"tr_ingestion_data_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/60575ea3-7374-4d41-9f31-4dfb7a59dae1/resourceGroups/Juhi/providers/Microsoft.Storage/storageAccounts/juhiblobstorage"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ADF-Juhi_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ls_AzureDataLakeStorage_accountKey": {
+						"value": "[parameters('ls_AzureDataLakeStorage_accountKey')]"
+					},
+					"ls_ablob_covidreportingsa_connectionString": {
+						"value": "[parameters('ls_ablob_covidreportingsa_connectionString')]"
+					},
+					"ls_AzureDataLakeStorage_properties_typeProperties_url": {
+						"value": "[parameters('ls_AzureDataLakeStorage_properties_typeProperties_url')]"
+					},
+					"ls_source_deathcases_http_properties_typeProperties_url": {
+						"value": "[parameters('ls_source_deathcases_http_properties_typeProperties_url')]"
+					},
+					"mykv_properties_typeProperties_baseUrl": {
+						"value": "[parameters('mykv_properties_typeProperties_baseUrl')]"
+					},
+					"test_blob_ls_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('test_blob_ls_properties_typeProperties_connectionString_secretName')]"
+					},
+					"tr_ingestion_data_properties_typeProperties_scope": {
+						"value": "[parameters('tr_ingestion_data_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
