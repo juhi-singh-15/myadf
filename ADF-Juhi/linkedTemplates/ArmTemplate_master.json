@@ -79,13 +79,33 @@
 					},
 					"test_blob_ls_properties_typeProperties_connectionString_secretName": {
 						"value": "[parameters('test_blob_ls_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "ADF-Juhi_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"tr_ingestion_data_properties_typeProperties_scope": {
 						"value": "[parameters('tr_ingestion_data_properties_typeProperties_scope')]"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ADF-Juhi_ArmTemplate_0')]"
+			]
 		}
 	]
 }
