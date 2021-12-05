@@ -1,0 +1,24 @@
+{
+	"name": "tr_ingest_hospital_cases",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "data_ingestion_http",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2021-11-30T18:34:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

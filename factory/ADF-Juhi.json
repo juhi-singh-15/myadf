@@ -1,0 +1,9 @@
+{
+	"name": "ADF-Juhi",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2ed98b47-6def-415d-a1ec-44d0ca9449c7",
+		"tenantId": "fe2c32d4-6aa0-4d55-9acf-1a4adc692d4c"
+	}
+}
