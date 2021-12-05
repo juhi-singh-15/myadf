@@ -5,6 +5,9 @@
 			"referenceName": "ls_AzureDataLakeStorage",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Lookup_Datasets"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

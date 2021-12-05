@@ -27,6 +27,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "DataFlow_Processing_pl"
+		},
 		"annotations": []
 	}
 }

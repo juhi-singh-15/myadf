@@ -5,6 +5,9 @@
 			"referenceName": "test_blob_ls",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Scenario_Practice_datasets"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
