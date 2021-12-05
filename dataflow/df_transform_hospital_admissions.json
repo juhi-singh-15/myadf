@@ -1,0 +1,37 @@
+{
+	"name": "df_transform_hospital_admissions",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_hospital_admission_df",
+						"type": "DatasetReference"
+					},
+					"name": "hospitalAdmissionSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_lookup_df",
+						"type": "DatasetReference"
+					},
+					"name": "sourceLookup"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "SelectReqFields"
+				},
+				{
+					"name": "LookupHospitalCases"
+				},
+				{
+					"name": "SelectHospitalSink"
+				}
+			],
+			"script": "source(output(\n\t\tcountry as string,\n\t\tindicator as string,\n\t\tdate as date,\n\t\tyear_week as string,\n\t\tvalue as double,\n\t\tsource as string,\n\t\turl as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> hospitalAdmissionSource\nsource(output(\n\t\tcountry as string,\n\t\tcountry_code_2_digit as string,\n\t\tcountry_code_3_digit as string,\n\t\tcontinent as string,\n\t\tpopulation as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourceLookup\nhospitalAdmissionSource select(mapColumn(\n\t\tcountry,\n\t\tindicator,\n\t\treported_date = date,\n\t\treported_year_week = year_week,\n\t\tvalue,\n\t\tsource\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectReqFields\nSelectReqFields, sourceLookup lookup(SelectReqFields@country == sourceLookup@country,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupHospitalCases\nLookupHospitalCases select(mapColumn(\n\t\tcountry = SelectReqFields@country,\n\t\tindicator,\n\t\treported_date,\n\t\treported_year_week,\n\t\tvalue,\n\t\tsource,\n\t\tcountry = sourceLookup@country,\n\t\tcountry_code_2_digit,\n\t\tcountry_code_3_digit,\n\t\tpopulation\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectHospitalSink"
+		}
+	}
+}
